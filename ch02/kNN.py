@@ -72,7 +72,7 @@ def classify0(inX, dataSet, labels, k):
         ## 第k次处理结束时：classCount = {'A': 1, 'B': 2}
         '''
         classCount[voteIlabel] = classCount.get(voteIlabel, 0) + 1 
-    # 排序
+    # 排序(按字典的value倒序排列)
     '''
     sortedClassCount = [('B', 2), ('A', 1)]
     '''
