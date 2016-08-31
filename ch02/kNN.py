@@ -16,7 +16,7 @@
 from numpy import *
 import operator
 
-# k-近邻算法
+# k-近邻算法(2.1 k-近邻算法概述)
 '''
 输入
 inX: 待定样本
@@ -79,7 +79,7 @@ def classify0(inX, dataSet, labels, k):
     sortedClassCount = sorted(classCount.iteritems(), key = operator.itemgetter(1), reverse = True)
     return sortedClassCount[0][0] 
 
-# 数据准备
+# 数据准备(2.1 k-近邻算法概述)
 def createDataSet():
     # 二维数组
     # 这里有平面上的四个点，这里指定了他们的平面坐标(两个特征/属性)
@@ -87,4 +87,17 @@ def createDataSet():
     # 这里的四个值对应四个点的类别(目标变量)
     labels = ['A', 'A', 'B', 'B']
     return group, labels
+
+# 读取文件并将其内容转换成矩阵(2.2 示例：使用k-近邻算法改进约会网站的配对效果)
+def file2matrix(filename):
+    love_dictionary = {'largeDoses': 3, 'smallDoses': 2, 'didntLike': 1}
+    # 打开文件
+    fr = open(filename)
+    # 将文件内容读出来存入list, 每一行作为一个元素
+    arrayOLines = fr.readlines()
+    # 获取文件行数，即：list的长度(list的元素个数)
+    numberOfLines = len(arrayOLines)
+
+
+
 
