@@ -107,6 +107,21 @@ def file2matrix(filename):
         line = line.strip()
         # 拆分字符串，将各字段存入list
         listFromLine = line.split('\t')
-
+        # 将每行的前三个字段存入矩阵二维数组
+        # TODO: 二维数组赋值
+        '''
+        returnMat = array([[  4.09200000e+04,   8.32697600e+00,   9.53952000e-01],
+                           [  0.00000000e+00,   0.00000000e+00,   0.00000000e+00],
+                           ...])
+        '''
+        returnMat[index,:] = listFromLine[0:3]
+        # 将每行的第四个字段存入classLabelVector
+        if (listFromLine[-1].isdigit()):
+            classLabelVector.append(int(listFromLine[-1])) 
+        else:
+            classLabelVector.append(love_dictionary.get(listFromLine[-1])) 
+        index += 1
+    return returnMat, classLabelVector
+        
 
 
