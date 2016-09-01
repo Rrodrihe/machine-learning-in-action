@@ -161,3 +161,22 @@ def drawScatter3():
     ax.scatter(datingDataMat[:,0], datingDataMat[:,1], (15.0 * array(datingLabels)), (15.0 * array(datingLabels)))
     plt.savefig('images/scatter3.png', format='png')
 
+# 归一化特征值(2.2 示例：使用k-近邻算法改进约会网站的配对效果)
+def autoNorm(dataSet):
+    # 获取每一列的最小值，存入一维数组minVals
+    minVals = dataSet.min(0)
+    # 获取每一列的最大值，存入一维数组maxVals
+    maxVals = dataSet.min(0)
+    # 计算取值范围
+    ranges = maxVals - minVals
+    # 构建归一化数据集，和dataSet同等大小的二维数组, 这里：shape(dataSet) = (1000, 3)
+    normDataSet = zeros(shape(dataSet))
+    # 获取数据集的行数
+    m = dataSet.shape[0]
+    # 
+    normDataSet = dataSet - tile(minVals, (m, 1))
+    
+
+    
+
+
