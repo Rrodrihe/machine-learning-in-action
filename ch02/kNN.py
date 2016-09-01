@@ -97,7 +97,16 @@ def file2matrix(filename):
     arrayOLines = fr.readlines()
     # 获取文件行数，即：list的长度(list的元素个数)
     numberOfLines = len(arrayOLines)
-
+    # [返回值]创建一个元素值全为0的N*3数组
+    returnMat = zeros((numberOfLines, 3))
+    # [返回值]创建一个空list
+    classLabelVector = []
+    index = 0
+    for line in arrayOLines:
+        # 去除字符串首尾空白字符
+        line = line.strip()
+        # 拆分字符串，将各字段存入list
+        listFromLine = line.split('\t')
 
 
 
