@@ -16,6 +16,12 @@
 from numpy import *
 import operator
 
+# 导入matplotlib用于生成图形
+import matplotlib
+matplotlib.use('Agg')  # 该条语句必须在import matplotlib之后
+import matplotlib.pyplot as plt
+
+
 # k-近邻算法(2.1 k-近邻算法概述)
 '''
 输入
@@ -108,12 +114,12 @@ def file2matrix(filename):
         # 拆分字符串，将各字段存入list
         listFromLine = line.split('\t')
         # 将每行的前三个字段存入矩阵二维数组
-        # TODO: 二维数组赋值
         '''
         returnMat = array([[  4.09200000e+04,   8.32697600e+00,   9.53952000e-01],
                            [  0.00000000e+00,   0.00000000e+00,   0.00000000e+00],
                            ...])
         '''
+        # returnMat[index,:]表示编号为index的这一行上的所有元素(应该是一个list)
         returnMat[index,:] = listFromLine[0:3]
         # 将每行的第四个字段存入classLabelVector
         if (listFromLine[-1].isdigit()):
@@ -123,5 +129,35 @@ def file2matrix(filename):
         index += 1
     return returnMat, classLabelVector
         
+# 使用Matplotlib(2.2 示例：使用k-近邻算法改进约会网站的配对效果)
+def drawScatter1():
+    # 获取矩阵和标签
+    datingDataMat, datingLabels = file2matrix('datingTestSet.txt') 
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    # 使用第2个和第3个特征(玩视频游戏所耗时间百分比 & 每周消费的冰淇淋公升数)
+    ax.scatter(datingDataMat[:,1], datingDataMat[:,2])
+    plt.savefig('images/scatter1.png', format='png')
 
+# 使用Matplotlib(2.2 示例：使用k-近邻算法改进约会网站的配对效果)
+# 与drawScatter1相比，使用不同的色彩和尺寸标记不同的类别
+def drawScatter2():
+    # 获取矩阵和标签
+    datingDataMat, datingLabels = file2matrix('datingTestSet.txt') 
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    # 使用第2个和第3个特征(玩视频游戏所耗时间百分比 & 每周消费的冰淇淋公升数)
+    ax.scatter(datingDataMat[:,1], datingDataMat[:,2], (15.0 * array(datingLabels)), (15.0 * array(datingLabels)))
+    plt.savefig('images/scatter2.png', format='png')
+
+# 使用Matplotlib(2.2 示例：使用k-近邻算法改进约会网站的配对效果)
+# 与drawScatter2相比，使用第1个特征和第2个特征(每年获得的飞行常客里程数 & 玩视频游戏所耗时间百分比)
+def drawScatter3():
+    # 获取矩阵和标签
+    datingDataMat, datingLabels = file2matrix('datingTestSet.txt') 
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    # 使用第1个特征和第2个特征(每年获得的飞行常客里程数 & 玩视频游戏所耗时间百分比)
+    ax.scatter(datingDataMat[:,0], datingDataMat[:,1], (15.0 * array(datingLabels)), (15.0 * array(datingLabels)))
+    plt.savefig('images/scatter3.png', format='png')
 
