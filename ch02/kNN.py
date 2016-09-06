@@ -166,16 +166,41 @@ def autoNorm(dataSet):
     # 获取每一列的最小值，存入一维数组minVals
     minVals = dataSet.min(0)
     # 获取每一列的最大值，存入一维数组maxVals
-    maxVals = dataSet.min(0)
+    maxVals = dataSet.max(0)
     # 计算取值范围
     ranges = maxVals - minVals
     # 构建归一化数据集，和dataSet同等大小的二维数组, 这里：shape(dataSet) = (1000, 3)
     normDataSet = zeros(shape(dataSet))
     # 获取数据集的行数
     m = dataSet.shape[0]
-    # 
+    # 二维数组相减
     normDataSet = dataSet - tile(minVals, (m, 1))
-    
+    # 得到归一化数值，取值范围: [0-1]
+    normDataSet = normDataSet / tile(ranges, (m, 1))
+    return normDataSet, ranges, minVals
+     
+# 分类器针对约会网站的测试代码(2.2.4 测试算法：作为完整程序验证分类器) 
+def datingClassTest():
+    hoRatio = 0.50
+    # 导入文件，转换成矩阵数组
+    datingDataMat, datingLabels = file2matrix('datingTestSet2.txt')
+    # 特征值归一化处理
+    normMat, ranges, minVals = autoNorm(datingDataMat)
+    # 获取数据集的行数
+    m = normMat.shape[0]
+    numTestVecs= int(m * hoRatio)
+    # 错误计数
+    errorCount = 0.0
+    # 
+    for i in range(numTestVecs):
+        # 调用kNN算法计算该条记录的分类
+        classifierResult = classify0(normMat[i, :], normMat[numTestVecs:m, :], datingLabels[numTestVecs:m], 3)
+        print "the classifire came back widh: %d, the real answer is: %d" % (classifierResult, datingLabels[i])
+        # 判断kNN算法计算得到的分类和实际的分类是否相同
+        if (classifierResult != datingLabels[i]):
+            errorCount += 1.0
+    print "the total error rate is: %f" % (errorCount / float(numTestVecs))
+    print errorCount
 
     
 
