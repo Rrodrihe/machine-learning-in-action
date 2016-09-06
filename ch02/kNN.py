@@ -181,6 +181,7 @@ def autoNorm(dataSet):
      
 # 分类器针对约会网站的测试代码(2.2.4 测试算法：作为完整程序验证分类器) 
 def datingClassTest():
+    # 测试向量的比率(一般设置为0.1，即所有样本里，90%用于训练，10%用于测试)
     hoRatio = 0.50
     # 导入文件，转换成矩阵数组
     datingDataMat, datingLabels = file2matrix('datingTestSet2.txt')
@@ -188,12 +189,15 @@ def datingClassTest():
     normMat, ranges, minVals = autoNorm(datingDataMat)
     # 获取数据集的行数
     m = normMat.shape[0]
+    # 测试向量个数(行数)
     numTestVecs= int(m * hoRatio)
     # 错误计数
     errorCount = 0.0
-    # 
+    # 遍历所有的测试向量，计算错误率
     for i in range(numTestVecs):
         # 调用kNN算法计算该条记录的分类
+        # normMat[numTestVecs:m, :]表示测试向量后面的所有向量(训练向量，用于训练分类器)
+        # datingLabels[numTestVecs:m]表示训练向量对应的类别(list类型)
         classifierResult = classify0(normMat[i, :], normMat[numTestVecs:m, :], datingLabels[numTestVecs:m], 3)
         print "the classifire came back widh: %d, the real answer is: %d" % (classifierResult, datingLabels[i])
         # 判断kNN算法计算得到的分类和实际的分类是否相同
@@ -201,7 +205,4 @@ def datingClassTest():
             errorCount += 1.0
     print "the total error rate is: %f" % (errorCount / float(numTestVecs))
     print errorCount
-
-    
-
 
